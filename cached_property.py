@@ -2,7 +2,7 @@ class cached_property(object):
     def __init__(self, function):
         self.func = function
         self.args = None
-        self._cached = {}
+        self._cached = {}  # keys are (funcname, args)
 
     def __get__(self, obj, klass=None):
         def wrapper(obj):
