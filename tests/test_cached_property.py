@@ -6,7 +6,9 @@ from cached_property import cached_property
 class TestCachedProperty(unittest.TestCase):
     def setUp(self):
         self.f = __file__.split('tests')[0] + 'cached_property.py'
+        # obj to track of execution of code
         self.tracer = trace.Trace(trace=0, count=1)
+        # counter key to get number of executions of specific lineno.
         self.key = (self.f, 13)
 
     def test_method_call_for_same_value(self):
@@ -23,7 +25,7 @@ class TestCachedProperty(unittest.TestCase):
             self.tracer.runfunc(self.obj.foo, 2)
 
         r = self.tracer.results()
-
+        # method for same value must be called once.
         self.assertEqual(r.counter.get(self.key), 1)
 
     def test_method_call_for_different_value(self):
