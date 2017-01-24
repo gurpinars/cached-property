@@ -2,18 +2,17 @@ class cached_property(object):
     def __init__(self, function):
         self.func = function
         self.args = None
-        self._cached = {}  # keys are (funcname, args)
 
     def __get__(self, obj, klass=None):
         def wrapper(obj):
             def _wrapper(*args, **kwargs):
                 self.args = args
-                if self.key not in self._cached:
+                if self.key not in self.__dict__['cache']:
                     print("cached!")
-                    self._cached.update(
+                    self.__dict__['cache'].update(
                         {self.key: self.func(obj, *args, **kwargs)}
                     )
-                return self._cached.get(self.key)
+                return self.__dict__['cache'].get(self.key)
             return _wrapper
         return wrapper(obj)
 
