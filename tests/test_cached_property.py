@@ -14,6 +14,6 @@ class TestCachedProperty(unittest.TestCase):
         obj = factory()
         res = obj.foo(2)
         for cell in obj.foo.__closure__:
-            if cell.cell_contents is not None:
+            if hasattr(cell.cell_contents, 'cache'):
                 for expected in cell.cell_contents.cache.values():
                     self.assertEqual(expected, res)
