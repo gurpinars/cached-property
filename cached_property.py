@@ -15,7 +15,6 @@ class cached_property(metaclass=CachedMeta):
             def _wrapper(*args, **kwargs):
                 self.args = args
                 if self.key not in self.cache:
-                    print("cached!")
                     self.cache.update(
                         {self.key: self.func(obj, *args, **kwargs)}
                     )
